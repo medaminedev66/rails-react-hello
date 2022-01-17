@@ -1,17 +1,26 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Greetings from './Greetings'
-
+import React from 'react';
+import { BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Greetings from './Greetings';
+import Home from './Home';
 class App extends React.Component {
-  render () {
+  render() {
     return (
-      <React.Fragment>
+      <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Greetings />}></Route>
+          <Route
+            exact
+            path="/"
+            element={<Greetings greeting="Hey Hey Hey Hey hey hey hey" />}
+          ></Route>
+          <Route path="/home" element={<Home />}></Route>
         </Routes>
-      </React.Fragment>
+      </BrowserRouter>
     );
   }
 }
 
-export default App
+export default App;
