@@ -1,19 +1,27 @@
-const initialState = [];
-const FETCH_DATA = 'countries/FETCH_DATA';
+const initialState = { greetings: [{ id: 1, greet: 'Hello' }] };
+const GET_GREETINGS_REQUEST = 'GET_GREETINGS_REQUEST';
 
-export const fetchData = () => async (dispatch) => {
-  const response = await fetch('http://localhost:3000/v1/greetings');
-  const data = await response.json();
-  dispatch({
-    type: FETCH_DATA,
-    payload: data,
-  });
+export const getThings = () => {
+  console.log('getThings() Action!!');
+  return (dispatch) => {
+    return fetch('http://localhost:3000/v1/greetings.json')
+      .then((response) => response.json())
+      .then((json) => dispatch(getGreetingsSuccess(json)))
+      .catch((error) => console.log(error));
+  };
+};
+
+export const getGreetingsSuccess = (json) => {
+  return {
+    type: GET_GREETINGS_REQUEST,
+    json,
+  };
 };
 
 export const greetingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_DATA:
-      return action.payload;
+    case GET_GREETINGS_REQUEST:
+      return action.json;
     default:
       return state;
   }
